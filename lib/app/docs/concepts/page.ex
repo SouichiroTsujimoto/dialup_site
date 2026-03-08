@@ -17,7 +17,7 @@ defmodule Dialup.App.Docs.Concepts.Page do
       以後の操作はすべてこのプロセスを通じて行われます。
     </p>
 
-    <pre class="arch-diagram">
+    <pre>
     【ブラウザ】
       dialup.js
       ├── WebSocket 接続管理（Cookie 経由のセッション ID）

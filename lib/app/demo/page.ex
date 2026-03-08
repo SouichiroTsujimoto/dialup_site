@@ -105,15 +105,15 @@ defmodule Dialup.App.Demo.Page do
           <span class="demo-tag">:patch</span>
           <h3>カウンター — 部分更新</h3>
         </div>
-        <p style="color: var(--muted); font-size: 0.875rem; margin: 0 0 0.5rem;">
+        <p>
           <code>&#123;:patch, "demo-counter-value", rendered, assigns&#125;</code> を使用。
           カウンター部分の要素だけが更新され、ページ全体は再描画されません。
         </p>
         {render_counter(assigns)}
         <div>
-          <button class="demo-btn" ws-event="dec">−</button>
-          <button class="demo-btn" ws-event="inc">＋</button>
-          <button class="demo-btn" ws-event="reset_counter" style="margin-left: 1rem; opacity: 0.6;">リセット</button>
+          <button class="btn btn-primary" ws-event="dec">ー</button>
+          <button class="btn btn-primary" ws-event="inc">＋</button>
+          <button class="btn btn-ghost" ws-event="reset_counter">リセット</button>
         </div>
       </div>
 
@@ -121,16 +121,16 @@ defmodule Dialup.App.Demo.Page do
       <div class="demo-card">
         <div class="demo-card-header">
           <span class="demo-tag">ws-submit</span>
-          <h3>フォーム送信</h3>
+          <h3>form submit</h3>
         </div>
-        <p style="color: var(--muted); font-size: 0.875rem; margin: 0 0 1rem;">
+        <p>
           <code>ws-submit</code> を持つ form は、送信時にフォームデータをオブジェクトとしてサーバーに送ります。
           <code>handle_event("submit_name", %&#123;"name" => name&#125;, assigns)</code> で受け取れます。
         </p>
         <form ws-submit="submit_name">
           <div class="form-row">
             <input type="text" name="name" value={@name_input} placeholder="名前を入力..." />
-            <button type="submit" class="demo-btn">送信</button>
+            <button type="submit" class="btn btn-ghost">送信</button>
           </div>
         </form>
         <%= if @submitted_name do %>
@@ -152,7 +152,7 @@ defmodule Dialup.App.Demo.Page do
         </p>
         <div class="form-row">
           <input type="text" ws-change="draft_change" ws-debounce="300" value={@draft} placeholder="入力中にサーバーへ同期..." />
-          <button class="demo-btn" ws-event="confirm_draft">確定</button>
+          <button class="btn btn-ghost" ws-event="confirm_draft">確定</button>
         </div>
         {render_draft_preview(assigns)}
         <%= if @draft_confirmed do %>
@@ -173,7 +173,7 @@ defmodule Dialup.App.Demo.Page do
         <form ws-submit="send_message">
           <div class="form-row">
             <input type="text" name="message" placeholder="メッセージを入力..." />
-            <button type="submit" class="demo-btn">送信</button>
+            <button type="submit" class="btn btn-ghost">送信</button>
           </div>
         </form>
         <%= if @message_log == [] do %>
@@ -186,7 +186,7 @@ defmodule Dialup.App.Demo.Page do
               </li>
             <% end %>
           </ul>
-          <button class="demo-btn" ws-event="clear_log" style="margin-top: 0.75rem; opacity: 0.6;">クリア</button>
+          <button class="btn btn-primary" ws-event="clear_log">クリア</button>
         <% end %>
       </div>
 
@@ -202,10 +202,10 @@ defmodule Dialup.App.Demo.Page do
           <code>history.pushState</code> で URL も更新されます。ページ全体のリロードは発生しません。
         </p>
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-          <span ws-href="/" class="demo-btn">← Home</span>
-          <span ws-href="/docs" class="demo-btn">Docs</span>
-          <span ws-href="/docs/concepts" class="demo-btn">Concepts</span>
-          <span ws-href="/docs/api" class="demo-btn">API Ref</span>
+          <a ws-href="/" class="btn btn-primary">← Home</a>
+          <a ws-href="/docs" class="btn btn-primary">Docs</a>
+          <a ws-href="/docs/concepts" class="btn btn-primary">Concepts</a>
+          <a ws-href="/docs/api" class="btn btn-primary">API Ref</a>
         </div>
       </div>
     </div>

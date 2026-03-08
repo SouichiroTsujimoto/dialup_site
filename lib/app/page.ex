@@ -27,10 +27,10 @@ end
   def render(assigns) do
     ~H"""
     <section class="hero">
-      <div class="hero-badge">Dialup Framework</div>
+      <div class="hero-badge">$ mix phx.new hello</div>
       <h1>
         <span class="hl">WebSocket</span>-first<br/>
-        Real-time UI
+        Elixir Web Framework
       </h1>
       <p class="hero-sub">
         Dialup はサーバー上の GenServer がブラウザの状態を持ち続ける、
@@ -92,7 +92,7 @@ end
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-alt">
       <div class="container">
         <div class="section-title">
           <h2>Hypermedia の次へ</h2>
@@ -134,12 +134,16 @@ end
     </section>
 
     <section class="section section-alt">
-      <div class="container" style="text-align: center;">
-        <h2 style="font-size: 2rem; margin: 0 0 1rem;">実際に動かしてみる</h2>
-        <p style="color: var(--muted); margin: 0 0 2rem;">カウンター・フォーム・リアルタイム入力を体験できる Live Demo を用意しています。</p>
-        <span ws-href="/demo" class="btn btn-primary" style="font-size: 1rem; padding: 0.875rem 2rem;">
-          Live Demo を開く &rarr;
-        </span>
+      <div class="container">
+        <div class="section-title">
+          <h2>実際に動かしてみる</h2>
+          <p>カウンター・フォーム・リアルタイム入力を体験できる Live Demo を用意しています。</p>
+        </div>
+        <div class="section-content">
+          <a ws-href="/demo" class="btn btn-primary">
+            Live Demo を開く &rarr;
+          </a>
+        </div>
       </div>
     </section>
     """

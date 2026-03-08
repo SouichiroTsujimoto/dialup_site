@@ -3,30 +3,25 @@ defmodule Dialup.App.Layout do
 
   def render(assigns) do
     ~H"""
-    <header class="site-header">
-      <div class="header-inner">
-        <span class="site-logo" ws-href="/">
-          Dial<span class="logo-accent">up</span>
-        </span>
-        <nav class="site-nav">
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <span class="nav-logo" ws-href="/">Dialup</span>
+        <div class="nav-links">
           <span ws-href="/docs">Docs</span>
           <span ws-href="/docs/concepts">Concepts</span>
           <span ws-href="/docs/api">API</span>
-          <span ws-href="/demo" class="nav-cta">Live Demo</span>
-        </nav>
+          <span ws-href="/demo">Demo</span>
+        </div>
+        <span id="ws-status" class="ws-lamp" title="WebSocket status"></span>
       </div>
-    </header>
+    </nav>
 
-    <span id="ws-status"></span>
-
-    {raw(@inner_content)}
+    <main class="page-content">
+      {raw(@inner_content)}
+    </main>
 
     <footer class="site-footer">
-      <p>
-        Dialup — MIT License &middot;
-        Built with Dialup itself &middot;
-        1 tab = 1 process
-      </p>
+      <p>Dialup — MIT License &middot; Built with Dialup &middot; WebSocket-first Framework</p>
     </footer>
     """
   end
