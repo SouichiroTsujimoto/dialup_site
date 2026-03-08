@@ -1,0 +1,40 @@
+.docs-layout {
+  display: grid; grid-template-columns: 220px 1fr; gap: 3rem;
+  max-width: var(--max-w); margin: 0 auto; padding: 3rem 2rem;
+  min-height: calc(100vh - 60px);
+}
+.docs-sidebar { position: sticky; top: 4.5rem; align-self: start; }
+.sidebar-section-label {
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 700; margin: 1.5rem 0 0.4rem;
+}
+.sidebar-section-label:first-child { margin-top: 0; }
+.sidebar-link {
+  display: block; padding: 0.375rem 0.75rem; border-radius: 6px;
+  font-size: 0.875rem; color: #374151; transition: background 0.1s, color 0.1s;
+}
+.sidebar-link:hover { background: var(--accent-soft); color: var(--accent); }
+.sidebar-link.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.docs-content { min-width: 0; }
+.docs-content h1 { font-size: 2rem; margin: 0 0 0.5rem; }
+.docs-content .page-lead { font-size: 1.1rem; color: var(--muted); margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+.docs-content h2 { font-size: 1.35rem; margin-top: 2.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.docs-content h3 { font-size: 1.05rem; margin-top: 1.75rem; color: var(--ink); }
+.docs-content p { color: #374151; line-height: 1.7; }
+.docs-content a { color: var(--accent); text-decoration: none; }
+.docs-content a:hover { text-decoration: underline; }
+.api-block { margin-bottom: 2.5rem; }
+.api-block h3 { margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.return-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.return-table th { background: var(--bg); padding: 0.6rem 1rem; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+.return-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); color: #374151; vertical-align: top; }
+.return-table tr:last-child td { border-bottom: none; }
+.attr-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.attr-table th { background: var(--bg); padding: 0.6rem 1rem; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+.attr-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); color: #374151; vertical-align: top; }
+.attr-table tr:last-child td { border-bottom: none; }
+.arch-diagram {
+  background: var(--ink); color: #c4b5fd; border-radius: 10px;
+  padding: 1.5rem 2rem; font-family: monospace; font-size: 0.825rem; line-height: 1.8;
+  white-space: pre; overflow-x: auto; margin: 1.5rem 0;
+}
