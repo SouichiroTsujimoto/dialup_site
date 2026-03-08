@@ -34,8 +34,8 @@ end
       </h1>
       <p class="hero-sub">
         Dialup はサーバー上の GenServer がブラウザの状態を持ち続ける、
-        WebSocket ファーストな Elixir フレームワークです。
-        ルーティングはファイル配置だけ。差分はクライアント側で。
+        WebSocket ファーストな Elixir フレームワークです。 <br/>
+        新しい形のSingle Page Application を実現します。
       </p>
       <div class="hero-actions">
         <span ws-href="/docs" class="btn btn-primary">Get Started</span>
@@ -56,7 +56,7 @@ end
     <section class="section section-alt">
       <div class="section-title">
         <h2>なぜ Dialup なのか</h2>
-        <p>LiveView の思想を継承しながらシンプルな実装を目指す</p>
+        <p>1 tab = 1 process で、全てのページにまたがってセッションが継続。<br/>状態はサーバー上に存在し、WebSocket で同期される。</p>
       </div>
       <div class="features container">
         <div class="feature-card">
@@ -66,8 +66,8 @@ end
         </div>
         <div class="feature-card">
           <span class="feature-icon">⚡</span>
-          <h3>1 タブ = 1 プロセス</h3>
-          <p>各ブラウザタブが独立した GenServer を持つ。状態はサーバー上に存在し、WebSocket で同期される。</p>
+          <h3>1 tab = 1 process</h3>
+          <p>各セッションが独立した GenServer を持つ。状態はサーバー上に存在し、WebSocket で同期される。</p>
         </div>
         <div class="feature-card">
           <span class="feature-icon">🔄</span>
@@ -87,7 +87,7 @@ end
         <div class="feature-card">
           <span class="feature-icon">🔁</span>
           <h3>自動再接続</h3>
-          <p>切断を検知したら指数バックオフで自動再接続。プロセスが生きていれば状態はそのまま復元される。</p>
+          <p>切断を検知したら指数バックオフで再接続。プロセスが生きていれば状態はそのまま復元される。</p>
         </div>
       </div>
     </section>
@@ -95,37 +95,49 @@ end
     <section class="section section-alt">
       <div class="container">
         <div class="section-title">
-          <h2>Hypermedia の次へ</h2>
-          <p>UI アーキテクチャの三つの流派</p>
+          <h2>フレームワーク比較</h2>
+          <p>Dialup は Phoenix LiveView と Next.js に大きく影響を受けています</p>
         </div>
         <div class="compare-wrap">
           <table class="compare-table">
             <thead>
               <tr>
-                <th>思想</th>
-                <th>転送単位</th>
-                <th>状態の場所</th>
-                <th>代表技術</th>
+                <th>機能</th>
+                <th class="highlight-col">Dialup</th>
+                <th>Next.js</th>
+                <th>Phoenix LiveView</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><span class="pill pill-gray">RESTful</span></td>
-                <td>JSON リソース</td>
-                <td>クライアント (React 等)</td>
-                <td>Rails API + React</td>
+                <td>言語</td>
+                <td class="highlight-col">Elixir</td>
+                <td>TypeScript / JS</td>
+                <td>Elixir</td>
               </tr>
               <tr>
-                <td><span class="pill pill-gray">Hypermediaful</span></td>
-                <td>HTML 断片</td>
-                <td>サーバー (ステートレス)</td>
-                <td>Rails + htmx / Turbo</td>
+                <td>ルーティング</td>
+                <td class="highlight-col">ファイルベース</td>
+                <td>ファイルベース</td>
+                <td><code>router.ex</code> に定義</td>
               </tr>
-              <tr class="highlight-row">
-                <td><span class="pill pill-purple">Dialup</span></td>
-                <td>HTML 断片 (WS)</td>
-                <td>サーバー上のプロセス</td>
-                <td>Dialup / Phoenix LiveView</td>
+              <tr>
+                <td>状態の管理</td>
+                <td class="highlight-col">サーバー</td>
+                <td>クライアント (React)</td>
+                <td>サーバー</td>
+              </tr>
+              <tr>
+                <td>リアルタイム通信</td>
+                <td class="highlight-col">WebSocket 組み込み</td>
+                <td>別途実装が必要</td>
+                <td>WebSocket 組み込み</td>
+              </tr>
+              <tr>
+                <td>DOM 更新</td>
+                <td class="highlight-col">idiomorph</td>
+                <td>Virtual DOM (React)</td>
+                <td>サーバサイドで差分計算 + morphdom等</td>
               </tr>
             </tbody>
           </table>

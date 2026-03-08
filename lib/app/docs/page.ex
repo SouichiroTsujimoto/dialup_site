@@ -3,14 +3,23 @@ defmodule Dialup.App.Docs.Page do
 
   def page_title(_assigns), do: "Getting Started — Dialup"
 
-  defp code_install, do: ~S|mix new my_app
-cd my_app|
+  defp code_new, do: ~S|mix dialup.new my_app
+cd my_app
+mix deps.get
+mix run --no-halt|
 
-  defp code_deps, do: ~S|defp deps do
-  [
-    {:dialup, "~> 0.1"}
-  ]
-end|
+  defp code_file_tree, do: ~S|my_app/
+├── priv/static/         # 静的ファイル置き場（画像・favicon など）
+└── lib/
+    ├── my_app.ex        # Application モジュール
+    ├── root.html.heex   # HTML シェル（<head> / hooks / analytics）
+    └── app/
+        ├── layout.ex    # ルートレイアウト
+        ├── layout.css   # 全ページ共通スタイル（コロケーション CSS）
+        ├── page.ex      # ホームページ /
+        ├── page.css     # / 固有スタイル（コロケーション CSS）
+        ├── error.ex     # エラーページ（404 / 500）
+        └── error.css    # エラーページスタイル|
 
   defp code_app_module, do: ~S|defmodule MyApp do
   use Application
@@ -18,7 +27,7 @@ end|
   use Dialup,
     app_dir: __DIR__ <> "/app",
     title: "My App",
-    lang: "ja"
+    lang: "en"
 
   @impl Application
   def start(_type, _args) do
@@ -29,7 +38,27 @@ end|
   end
 end|
 
-  defp code_first_page, do: ~S|defmodule Dialup.App.Page do
+  defp code_root_shell, do: ~S|<!DOCTYPE html>
+<html lang="{@lang}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{@title}</title>
+  <!-- ここに <meta>, <link>, analytics を追加 -->
+</head>
+<body>
+  <div id="dialup-root">{raw(@inner_content)}</div>
+  <script src="/idiomorph.js"></script>
+  <script src="/dialup.js"></script>
+  <script>
+    Dialup.connect({
+      /* hooks: { MyHook: { mounted(el) {}, destroyed(el) {} } } */
+    });
+  </script>
+</body>
+</html>|
+
+  defp code_first_page, do: ~S|defmodule MyApp.App.Page do
   use Dialup.Page
 
   def mount(_params, assigns) do
@@ -49,14 +78,24 @@ end|
   end
 end|
 
-  defp code_file_tree, do: ~S|lib/app/
-├── page.ex            # /
+  defp code_routing, do: ~S|lib/app/
+├── page.ex              # /
 ├── about/
-│   └── page.ex        # /about
+│   └── page.ex          # /about
+├── blog/
+│   ├── layout.ex        # /blog/* 共通レイアウト
+│   └── [slug]/
+│       └── page.ex      # /blog/:slug（動的ルート）
 └── users/
-    ├── page.ex        # /users
     └── [id]/
-        └── page.ex    # /users/:id|
+        └── page.ex      # /users/:id|
+
+  defp code_colocation, do: ~S|/* lib/app/page.css — page.ex と同じディレクトリに置く */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+h1 { font-size: 3rem; }|
 
   def render(assigns) do
     ~H"""
@@ -66,63 +105,57 @@ end|
     </p>
 
     <h2>インストール</h2>
-    <p>新しい Mix プロジェクトを作成し、<code>mix.exs</code> に Dialup を追加します。</p>
-    <pre><code>{code_install()}</code></pre>
+    <p><code>mix dialup.new</code> ジェネレータで新規プロジェクトを作成します（推奨）。</p>
 
-    <p><code>mix.exs</code> の <code>deps</code> に追加：</p>
-    <pre><code>{code_deps()}</code></pre>
+    <pre><code>{code_new()}</code></pre>
 
-    <pre><code>mix deps.get</code></pre>
+    <p>ブラウザで <code>http://localhost:4000</code> にアクセスして動作を確認してください。</p>
 
-    <h2>アプリケーションモジュールの設定</h2>
-    <p><code>lib/my_app.ex</code> を以下のように書き換えます：</p>
+    <h2>生成されるファイル構成</h2>
+    <pre><code>{code_file_tree()}</code></pre>
+
+    <h2>Application モジュール</h2>
+    <p><code>lib/my_app.ex</code> が Dialup の起点です。<code>use Dialup</code> で設定を行い、Supervision Tree に <code>{"{Dialup, app: __MODULE__, port: 4000}"}</code> を追加するだけです。</p>
     <pre><code>{code_app_module()}</code></pre>
 
     <div class="note">
-      <strong>app_dir</strong> には <code>page.ex</code> / <code>layout.ex</code> を置くディレクトリを指定します。
-      このディレクトリのファイル配置が自動的にルートになります。
+      <strong>app_dir</strong> に指定したディレクトリのファイル配置が自動的にルートになります。
+      <code>router.ex</code> への手書き登録は不要です。
     </div>
 
+    <h2>root.html.heex — HTML シェル</h2>
+    <p>
+      <code>lib/root.html.heex</code> は全ページ共通の HTML シェルです。
+      <code>&lt;head&gt;</code> へのタグ追加・分析スクリプト・JS フックの登録はここで行います。
+      <code>id="dialup-root"</code> と <code>Dialup.connect()</code> は必須です。
+    </p>
+    <pre><code>{code_root_shell()}</code></pre>
+
     <h2>最初のページを作る</h2>
+    <p><code>lib/app/page.ex</code> がルートページ <code>/</code> になります。</p>
+    <pre><code>{code_first_page()}</code></pre>
+
+    <h2>ページの追加とルーティング</h2>
+    <p>ファイルを置くだけでルートが追加されます。動的ルートは <code>[パラメータ名]</code> ディレクトリで表現します。</p>
+    <pre><code>{code_routing()}</code></pre>
+
+    <h2>コロケーション CSS</h2>
     <p>
-      ルートページ <code>/</code> を作成します。
-      <code>lib/app/</code> ディレクトリを作り、<code>page.ex</code> を置くだけです。
+      <code>page.ex</code> と同名の <code>page.css</code> を同じディレクトリに置くと、
+      コンパイル時に自動スコーピングされて注入されます。ビルドツール不要。
     </p>
+    <pre><code>{code_colocation()}</code></pre>
 
-    <ol class="steps">
-      <li>
-        <strong>ディレクトリを作成する</strong>
-        <pre><code>mkdir -p lib/app</code></pre>
-      </li>
-      <li>
-        <strong><code>lib/app/page.ex</code> を作成する</strong>
-        <pre><code>{code_first_page()}</code></pre>
-      </li>
-      <li>
-        <strong>サーバーを起動する</strong>
-        <pre><code>mix run --no-halt</code></pre>
-        <p>ブラウザでポート 4000 を開くとリアルタイムカウンターが動作しています。</p>
-      </li>
-    </ol>
-
-    <h2>ページの追加</h2>
-    <p>
-      新しいページは <code>lib/app/</code> 以下にファイルを置くだけで追加できます。
-      ファイルパスがそのままURLになります。
-    </p>
-
-    <pre><code>{code_file_tree()}</code></pre>
-
-    <p>
-      動的ルートは <code>[パラメータ名]</code> という形式のディレクトリ名で表現します。
-      <code>/users/[id]/page.ex</code> は <code>/users/:id</code> にマッチし、
-      <code>mount/2</code> の第一引数に <code>%&#123;"id" => "..."&#125;</code> として渡されます。
-    </p>
+    <div class="note">
+      <strong>静的ファイル配信：</strong>
+      <code>priv/static/</code> に配置したファイルは <code>/</code> パスから自動配信されます。
+      例: <code>priv/static/images/logo.png</code> → <code>&lt;img src="/images/logo.png"&gt;</code>
+    </div>
 
     <h2>次のステップ</h2>
     <ul>
-      <li><span ws-href="/docs/concepts">アーキテクチャと state のライフサイクル</span>を理解する</li>
-      <li><span ws-href="/docs/api">API リファレンス</span>で使えるすべての機能を確認する</li>
+      <li><span ws-href="/docs/concepts">アーキテクチャとライフサイクル</span>を理解する</li>
+      <li><span ws-href="/docs/api">API リファレンス</span>で使える機能を確認する</li>
       <li><span ws-href="/demo">Live Demo</span> で実際の動作を確認する</li>
     </ul>
     """
