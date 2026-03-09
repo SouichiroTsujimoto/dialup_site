@@ -109,6 +109,21 @@
   .ws-lamp { border-left: none; padding: 0 0.5rem; }
 }
 
+/* ── GitHub link ── */
+.nav-github {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  color: var(--main-text);
+  transition: background 0.15s, color 0.15s;
+}
+.nav-github:hover { background: var(--accent); color: var(--main-background); }
+.github-label { display: none; }
+@media (max-width: 640px) {
+  .github-icon { display: none; }
+  .github-label { display: inline; font-size: 0.8rem; font-weight: 500; }
+}
+
 /* ── Connection lamp ── */
 .ws-lamp {
   display: flex;
