@@ -1,4 +1,4 @@
-FROM elixir:1.18-alpine
+FROM elixir:1.19-alpine
 
 WORKDIR /build
 
