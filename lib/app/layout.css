@@ -80,6 +80,35 @@
 
 .nav-links .nav-cta:hover { background: var(--accent-dark) !important; }
 
+/* ── Mobile nav ── */
+@media (max-width: 640px) {
+  .nav-inner {
+    flex-wrap: wrap;
+    padding: 0 1rem;
+  }
+
+  .nav-logo { padding: 0.6rem 0; }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    border-top: var(--border);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar { display: none; }
+
+  .nav-links [ws-href] {
+    white-space: nowrap;
+    padding: 0 0.875rem;
+    font-size: 0.8rem;
+  }
+
+  .ws-lamp { border-left: none; padding: 0 0.5rem; }
+}
+
 /* ── Connection lamp ── */
 .ws-lamp {
   display: flex;
@@ -184,3 +213,7 @@ pre code { background: none; color: inherit; padding: 0; font-size: inherit; bor
 }
 .site-footer a { color: var(--main-text); text-decoration: underline; text-underline-offset: 3px; }
 .site-footer a:hover { background: var(--accent); }
+
+@media (max-width: 640px) {
+  .site-footer { padding: 0.875rem 1rem; font-size: 0.75rem; }
+}

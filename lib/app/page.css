@@ -94,3 +94,14 @@
 }
 .pill-purple { background: var(--main-background); color: var(--main-text); border-color: var(--main-text); }
 .pill-gray { background: var(--main-background); color: var(--main-text); border-color: var(--main-text); }
+
+@media (max-width: 640px) {
+  .hero { padding: 3rem 1.25rem 2.5rem; }
+  .hero-sub { font-size: 1rem; }
+  .hero-code { margin-top: 2.5rem; }
+
+  .section { padding: 2.5rem 1.25rem; }
+  .section-title h2 { font-size: 1.5rem; }
+
+  .features { grid-template-columns: 1fr; gap: 1rem; }
+}
