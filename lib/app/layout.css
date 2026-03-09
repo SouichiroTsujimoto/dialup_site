@@ -69,6 +69,7 @@
 }
 
 .nav-links [ws-href]:hover { background: var(--accent); color: var(--main-background); }
+.nav-links [ws-href].active { background: var(--accent); color: var(--main-background); }
 
 .nav-links .nav-cta {
   background: var(--accent);
