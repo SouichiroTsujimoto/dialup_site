@@ -3,7 +3,11 @@ defmodule Dialup.App.Docs.Page do
 
   def page_title(_assigns), do: "Getting Started — Dialup"
 
-  defp code_new, do: ~S|mix dialup.new my_app
+  defp code_new, do: ~S|# `dialup_new`コマンドをインストール(初回のみ)
+mix archive.install hex dialup_new
+
+# 新規プロジェクト作成
+mix dialup.new my_app
 cd my_app
 mix deps.get
 mix run --no-halt|
@@ -58,7 +62,7 @@ end|
 </body>
 </html>|
 
-  defp code_first_page, do: ~S|defmodule MyApp.App.Page do
+  defp code_first_page, do: ~S|defmodule Dialup.App.Page do
   use Dialup.Page
 
   def mount(_params, assigns) do

@@ -27,7 +27,10 @@ end
   def render(assigns) do
     ~H"""
     <section class="hero">
-      <div class="hero-badge">$ mix phx.new hello</div>
+      <div class="hero-badge" ws-href="/docs">
+        <span class="badge-default">$ mix dialup.new my_app</span>
+        <span class="badge-hover">→ Get Started!</span>
+      </div>
       <h1>
         <span class="hl">WebSocket</span>-first<br/>
         Elixir Web Framework

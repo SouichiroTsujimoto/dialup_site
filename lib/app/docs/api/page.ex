@@ -30,7 +30,7 @@ defmodule Dialup.App.Docs.Api.Page do
 
   defp code_layout do
     """
-    defmodule MyApp.App.Layout do
+    defmodule Dialup.App.Layout do
       use Dialup.Layout
 
       # 接続時に一度だけ呼ばれる（省略可）
@@ -51,7 +51,7 @@ defmodule Dialup.App.Docs.Api.Page do
 
   defp code_page do
     """
-    defmodule MyApp.App.Users.Id do
+    defmodule Dialup.App.Users.Id.Page do
       use Dialup.Page
 
       def page_title(assigns), do: "\#{assigns.user.name} | MyApp"
@@ -131,9 +131,9 @@ defmodule Dialup.App.Docs.Api.Page do
   defp code_helpers do
     """
     def mount(params, assigns) do
-      assigns
+      {:ok, assigns
       |> set_default(%{errors: [], page: 1})   # 未設定キーのみ初期値を設定
-      |> overwrite(%{user_id: params["id"]})   # 既存キーも含めて上書き
+      |> overwrite(%{user_id: params["id"]})}  # 既存キーも含めて上書き
     end
     """
   end

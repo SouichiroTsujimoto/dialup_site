@@ -11,7 +11,7 @@ defmodule Dialup.App.Docs.Concepts.Page do
   ├── ブラウザ履歴管理（history.pushState / popstate）
   └── HTML を受け取り idiomorph で DOM に適用
 
-            ↕ WebSocket（JSON 送受信）
+            ↕ WebSocket
 
 【Elixir サーバー】
   Dialup.SessionRegistry（Registry）
@@ -69,7 +69,7 @@ end|
   </div>
 </div>|
 
-  defp code_layout_false, do: ~S|defmodule MyApp.App.Login.Page do
+  defp code_layout_false, do: ~S|defmodule Dialup.App.Login.Page do
   use Dialup.Page
 
   @layout false  # 全画面表示（layout.ex を無効化）
