@@ -10,8 +10,10 @@ defmodule DialupSite do
   def start(_type, _args) do
     DialupSite.Telemetry.attach()
 
+    port = System.get_env("PORT", "4001") |> String.to_integer()
+
     children = [
-      {Dialup, app: __MODULE__, port: 4001}
+      {Dialup, app: __MODULE__, port: port}
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__.Supervisor]
