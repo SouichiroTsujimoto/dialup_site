@@ -61,8 +61,11 @@ defmodule Dialup.App.AgentDemo.Page do
   end
 
   def agent_grant(_assigns) do
+    # このデモは「人間にできることは AI にもできる」を体現するため全権限を渡す。
+    # タスク操作・UI ロックに加え、レイアウトが宣言したサイト内ナビゲーション
+    # （navigate_docs_concepts など）も自動的にツールとして利用できる。
     %{
-      capabilities: [:add_task, :complete_task, :clear_completed],
+      capabilities: :all,
       projections: [:state, :regions, :actions],
       expires_in: :timer.minutes(30),
       require_version: true
@@ -109,7 +112,11 @@ defmodule Dialup.App.AgentDemo.Page do
   def handle_event("register_handoff", %{"endpoint" => endpoint} = params, assigns) do
     {:update,
      overwrite(assigns, %{
-       handoff: %{endpoint: endpoint, expires_in_ms: params["expiresInMs"]}
+       handoff: %{
+         endpoint: endpoint,
+         url: params["url"] || endpoint,
+         expires_in_ms: params["expiresInMs"]
+       }
      })}
   end
 
@@ -124,25 +131,16 @@ defmodule Dialup.App.AgentDemo.Page do
   defp actor_label("ai"), do: "🤖 AI"
   defp actor_label(_), do: "🧑 You"
 
-  defp prompt_text(endpoint) do
+  defp prompt_text(url) do
     """
-    あなたはこの Dialup タスクボードを操作する AI アシスタントです。
-    HTTP MCP エンドポイント（同一オリジン・JSON-RPC 2.0）:
-    #{endpoint}
+    #{url}
 
-    手順:
-    1. tools/list で使えるツールを確認する
-    2. read_scene で project と version を取得する
-    3. project の目標を達成するために必要な具体的タスクを
-       add_task で1つずつ追加する（毎回最新の _version を渡す）
-
-    例:
-    {"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"read_scene","arguments":{}}}
+    この MCP エンドポイントのタスクボードに、プロジェクトの目標に合うタスクを追加して
     """
   end
 
-  defp curl_text(endpoint) do
-    ~s(curl -X POST #{endpoint} \\\n) <>
+  defp curl_text(url) do
+    ~s(curl -X POST #{url} \\\n) <>
       ~s(  -H 'Content-Type: application/json' \\\n) <>
       ~s(  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",) <>
       ~s("params":{"name":"read_scene","arguments":{}}}')
@@ -233,21 +231,21 @@ defmodule Dialup.App.AgentDemo.Page do
                 このボードを操作できる一時的な MCP エンドポイントです（30分で失効）。
               </p>
 
-              <label class="mcp-field-label">MCP エンドポイント</label>
+              <label class="mcp-field-label">MCP エンドポイント（フル URL）</label>
               <div class="mcp-copy-row">
-                <code class="mcp-endpoint" data-mcp-text="endpoint">{@handoff.endpoint}</code>
+                <code class="mcp-endpoint" data-mcp-text="endpoint">{@handoff.url}</code>
                 <button type="button" class="mcp-copy" data-mcp-copy="endpoint">コピー</button>
               </div>
 
               <label class="mcp-field-label">お使いの AI に貼り付けるプロンプト</label>
               <div class="mcp-copy-block">
-                <pre data-mcp-text="prompt">{prompt_text(@handoff.endpoint)}</pre>
+                <pre data-mcp-text="prompt">{prompt_text(@handoff.url)}</pre>
                 <button type="button" class="mcp-copy" data-mcp-copy="prompt">プロンプトをコピー</button>
               </div>
 
               <details class="mcp-curl">
                 <summary>curl で試す</summary>
-                <pre data-mcp-text="curl">{curl_text(@handoff.endpoint)}</pre>
+                <pre data-mcp-text="curl">{curl_text(@handoff.url)}</pre>
                 <button type="button" class="mcp-copy" data-mcp-copy="curl">curl をコピー</button>
               </details>
 
