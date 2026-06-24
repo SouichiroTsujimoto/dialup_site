@@ -176,7 +176,9 @@ defmodule Dialup.App.Docs.Api.Page do
     <h1>API リファレンス</h1>
     <p class="page-lead">
       Dialup が提供する主要な API を説明します。
-      完全なリファレンスは <code>mix docs</code> で生成される HexDocs で確認できます。
+      完全なリファレンスは
+      <a href="https://hexdocs.pm/dialup" target="_blank" rel="noopener">HexDocs（hexdocs.pm/dialup）</a>
+      で確認できます。
     </p>
 
     <h2>use Dialup オプション</h2>
@@ -330,6 +332,14 @@ defmodule Dialup.App.Docs.Api.Page do
         </tr>
       </tbody>
     </table>
+
+    <div class="note">
+      <strong>完全な API リファレンス：</strong>
+      ここで紹介しているのは主要な API の抜粋です。各モジュール・関数のシグネチャや型、
+      ガイドを含む網羅的なドキュメントは
+      <a href="https://hexdocs.pm/dialup" target="_blank" rel="noopener">HexDocs（hexdocs.pm/dialup）</a>
+      を参照してください。
+    </div>
     </div>
     """
   end

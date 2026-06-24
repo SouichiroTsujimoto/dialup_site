@@ -204,8 +204,17 @@ end|
     <pre class="arch-diagram">{code_mcp_arch()}</pre>
     <p>
       ライブデモは <.dialup_action navigate="/agent_demo" class="inline-link">/agent_demo</.dialup_action>。
-      詳細は Hex ガイド <em>HTTP MCP API</em> を参照してください。
+      詳細は HexDocs のガイド
+      <a href="https://hexdocs.pm/dialup" target="_blank" rel="noopener"><em>HTTP MCP API</em></a>
+      を参照してください。
     </p>
+
+    <div class="note">
+      <strong>さらに詳しく：</strong>
+      内部実装やプロセス構成を含む詳細なドキュメントは
+      <a href="https://hexdocs.pm/dialup" target="_blank" rel="noopener">HexDocs（hexdocs.pm/dialup）</a>
+      で公開しています。
+    </div>
     </div>
     """
   end

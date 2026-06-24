@@ -164,6 +164,13 @@ h1 { font-size: 3rem; }|
       <li><.dialup_action navigate="/docs/api" class="inline-link">API リファレンス</.dialup_action>で使える機能を確認する</li>
       <li><.dialup_action navigate="/demo" class="inline-link">UI Demo</.dialup_action> でリアルタイム UI を確認する</li>
     </ul>
+
+    <div class="note">
+      <strong>さらに詳しく：</strong>
+      このサイトのドキュメントは導入ガイドです。全モジュール・全関数の網羅的なリファレンスや
+      各種ガイドは <a href="https://hexdocs.pm/dialup" target="_blank" rel="noopener">HexDocs（hexdocs.pm/dialup）</a>
+      で公開しています。
+    </div>
     </div>
     """
   end
