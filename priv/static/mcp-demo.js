@@ -109,9 +109,11 @@
       const handoff = await res.json();
       endpoint = handoff.endpoint;
 
-      // セッション情報をページ状態に保存して、サーバー側で詳細を描画させる
+      // セッション情報をページ状態に保存して、サーバー側で詳細を描画させる。
+      // url はフル URL（オリジン込み）。表示・コピーともこの値を使う。
       dialup.send("register_handoff", {
         endpoint: handoff.endpoint,
+        url: absoluteEndpoint(),
         expiresInMs: handoff.grant?.expiresInMs,
       });
     } catch (error) {
@@ -128,6 +130,12 @@
     btn.textContent = "🤖 AI が作業中…";
 
     try {
+      // 作業中は人間が画面を操作できないようロックする
+      await rpc("tools/call", {
+        name: "lock_ui",
+        arguments: { reason: "AI がタスクを追加しています…" },
+      });
+
       const scene = await rpc("tools/call", { name: "read_scene", arguments: {} });
       const content = scene.structuredContent ?? {};
       version = content.version ?? version;
@@ -150,6 +158,12 @@
     } catch (error) {
       btn.textContent = `エラー: ${error.message}`;
     } finally {
+      // 必ず人間に操作を返す
+      try {
+        await rpc("tools/call", { name: "unlock_ui", arguments: {} });
+      } catch (_error) {
+        // ignore
+      }
       busy = false;
       btn.disabled = false;
       setTimeout(() => {
@@ -161,15 +175,8 @@
   async function copyFrom(btn) {
     const card = btn.closest("[data-mcp-card]");
     const sel = btn.getAttribute("data-mcp-copy");
-    let text = "";
-
-    if (sel === "endpoint") {
-      text = absoluteEndpoint();
-    } else {
-      const el = card?.querySelector(`[data-mcp-text="${sel}"]`);
-      text = el ? el.textContent : "";
-      if (endpoint) text = text.split(endpoint).join(absoluteEndpoint());
-    }
+    const el = card?.querySelector(`[data-mcp-text="${sel}"]`);
+    const text = el ? el.textContent.trim() : "";
 
     try {
       await navigator.clipboard.writeText(text);

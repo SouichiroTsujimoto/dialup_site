@@ -172,6 +172,7 @@ defmodule Dialup.App.Docs.Api.Page do
 
   def render(assigns) do
     ~H"""
+    <div class="docs-page">
     <h1>API リファレンス</h1>
     <p class="page-lead">
       Dialup が提供する主要な API を説明します。
@@ -338,6 +339,7 @@ defmodule Dialup.App.Docs.Api.Page do
       ガイドを含む網羅的なドキュメントは
       <a href="https://hexdocs.pm/dialup" target="_blank" rel="noopener">HexDocs（hexdocs.pm/dialup）</a>
       を参照してください。
+    </div>
     </div>
     """
   end

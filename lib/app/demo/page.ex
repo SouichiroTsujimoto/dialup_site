@@ -1,6 +1,29 @@
 defmodule Dialup.App.Demo.Page do
   use Dialup.Page
 
+  declare_action name: :inc, desc: "Increment the counter", params: %{}
+  declare_action name: :dec, desc: "Decrement the counter", params: %{}
+  declare_action name: :reset_counter, desc: "Reset the counter to zero", params: %{}
+
+  declare_action name: :submit_name,
+                 desc: "Submit a name from the form",
+                 params: %{name: :string},
+                 agent_only: true
+
+  declare_action name: :draft_change,
+                 desc: "Sync draft text while typing",
+                 params: %{value: :string},
+                 agent_only: true
+
+  declare_action name: :confirm_draft, desc: "Confirm the current draft", params: %{}
+
+  declare_action name: :send_message,
+                 desc: "Append a message to the log",
+                 params: %{message: :string},
+                 agent_only: true
+
+  declare_action name: :clear_log, desc: "Clear the message log", params: %{}
+
   def page_title(_assigns), do: "Live Demo — Dialup"
 
   def mount(_params, assigns) do
@@ -15,8 +38,6 @@ defmodule Dialup.App.Demo.Page do
        message_log: []
      })}
   end
-
-  # --- Counter ---
 
   def handle_event("inc", _, assigns) do
     new_assigns = Map.update!(assigns, :count, &(&1 + 1))
@@ -33,14 +54,10 @@ defmodule Dialup.App.Demo.Page do
     {:patch, "demo-counter-value", render_counter(new_assigns), new_assigns}
   end
 
-  # --- Form submit ---
-
   def handle_event("submit_name", %{"name" => name}, assigns) do
     new_assigns = assigns |> Map.merge(%{submitted_name: name, name_input: name})
     {:update, new_assigns}
   end
-
-  # --- ws-change: live draft ---
 
   def handle_event("draft_change", value, assigns) do
     new_assigns = Map.put(assigns, :draft, value)
@@ -51,8 +68,6 @@ defmodule Dialup.App.Demo.Page do
     new_assigns = assigns |> Map.merge(%{draft_confirmed: assigns.draft, draft: ""})
     {:update, new_assigns}
   end
-
-  # --- Log messages (handle_info demo) ---
 
   def handle_event("send_message", %{"message" => msg}, assigns) when msg != "" do
     entry = "[#{time_now()}] #{msg}"
@@ -65,8 +80,6 @@ defmodule Dialup.App.Demo.Page do
   def handle_event("clear_log", _, assigns) do
     {:update, Map.put(assigns, :message_log, [])}
   end
-
-  # --- Private renders ---
 
   defp render_counter(assigns) do
     ~H"""
@@ -99,7 +112,6 @@ defmodule Dialup.App.Demo.Page do
         <p>すべてのインタラクションは WebSocket 経由でサーバーの GenServer に届きます。</p>
       </div>
 
-      <%!-- === Counter === --%>
       <div class="demo-card">
         <div class="demo-card-header">
           <span class="demo-tag">:patch</span>
@@ -111,21 +123,21 @@ defmodule Dialup.App.Demo.Page do
         </p>
         {render_counter(assigns)}
         <div>
-          <button class="btn btn-primary" ws-event="dec">ー</button>
-          <button class="btn btn-primary" ws-event="inc">＋</button>
-          <button class="btn btn-ghost" ws-event="reset_counter">リセット</button>
+          <.dialup_action name={:dec} class="btn btn-primary">ー</.dialup_action>
+          <.dialup_action name={:inc} class="btn btn-primary">＋</.dialup_action>
+          <.dialup_action name={:reset_counter} class="btn btn-ghost">リセット</.dialup_action>
         </div>
       </div>
 
-      <%!-- === ws-submit === --%>
       <div class="demo-card">
         <div class="demo-card-header">
           <span class="demo-tag">ws-submit</span>
           <h3>form submit</h3>
         </div>
         <p>
-          <code>ws-submit</code> を持つ form は、送信時にフォームデータをオブジェクトとしてサーバーに送ります。
-          <code>handle_event("submit_name", %&#123;"name" => name&#125;, assigns)</code> で受け取れます。
+          自由入力フォームは <code>ws-submit</code> で送信します（入力値は動的なため
+          <code>&lt;.dialup_action&gt;</code> の静的パラメータでは表現できません）。
+          同じ操作は <code>declare_action</code> で AI にも公開されます。
         </p>
         <form ws-submit="submit_name">
           <div class="form-row">
@@ -138,21 +150,18 @@ defmodule Dialup.App.Demo.Page do
         <% end %>
       </div>
 
-      <%!-- === ws-change === --%>
       <div class="demo-card">
         <div class="demo-card-header">
           <span class="demo-tag">ws-change</span>
           <h3>リアルタイム入力同期</h3>
         </div>
         <p style="color: var(--muted); font-size: 0.875rem; margin: 0 0 1rem;">
-          <code>ws-change</code> は入力のたびにサーバーへ値を送ります。
-          <code>ws-debounce="300"</code> で 300ms のデバウンスを適用し、
-          タイピング中の過剰な送信を防いでいます。
-          ここでは <code>:patch</code> でプレビュー部分だけを更新しています。
+          テキスト入力は <code>ws-change</code> + <code>ws-debounce</code> でサーバーへ同期します。
+          確定ボタンは <code>&lt;.dialup_action&gt;</code> です。
         </p>
         <div class="form-row">
           <input type="text" ws-change="draft_change" ws-debounce="300" value={@draft} placeholder="入力中にサーバーへ同期..." />
-          <button class="btn btn-ghost" ws-event="confirm_draft">確定</button>
+          <.dialup_action name={:confirm_draft} class="btn btn-ghost">確定</.dialup_action>
         </div>
         {render_draft_preview(assigns)}
         <%= if @draft_confirmed do %>
@@ -160,7 +169,6 @@ defmodule Dialup.App.Demo.Page do
         <% end %>
       </div>
 
-      <%!-- === Message log === --%>
       <div class="demo-card">
         <div class="demo-card-header">
           <span class="demo-tag">:update</span>
@@ -168,7 +176,6 @@ defmodule Dialup.App.Demo.Page do
         </div>
         <p style="color: var(--muted); font-size: 0.875rem; margin: 0 0 1rem;">
           <code>&#123;:update, assigns&#125;</code> を使用。送信のたびに <code>#dialup-root</code> 全体を idiomorph で差し替えます。
-          サーバー側でタイムスタンプを付与しています（最新5件を表示）。
         </p>
         <form ws-submit="send_message">
           <div class="form-row">
@@ -186,26 +193,24 @@ defmodule Dialup.App.Demo.Page do
               </li>
             <% end %>
           </ul>
-          <button class="btn btn-primary" ws-event="clear_log">クリア</button>
+          <.dialup_action name={:clear_log} class="btn btn-primary">クリア</.dialup_action>
         <% end %>
       </div>
 
-      <%!-- === Navigation === --%>
       <div class="demo-card">
         <div class="demo-card-header">
-          <span class="demo-tag">ws-href</span>
+          <span class="demo-tag">navigate</span>
           <h3>SPA ナビゲーション</h3>
         </div>
         <p style="color: var(--muted); font-size: 0.875rem; margin: 0 0 1rem;">
-          <code>ws-href</code> をクリックすると <code>__navigate</code> イベントがサーバーに送られ、
-          新しいページの HTML が返ってきます。
-          <code>history.pushState</code> で URL も更新されます。ページ全体のリロードは発生しません。
+          ページ移動は <code>&lt;.dialup_action navigate="/path"&gt;</code> で宣言します。
+          人間のリンクと AI のナビゲーションツールが同時に生成されます。
         </p>
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-          <a ws-href="/" class="btn btn-primary">← Home</a>
-          <a ws-href="/docs" class="btn btn-primary">Docs</a>
-          <a ws-href="/docs/concepts" class="btn btn-primary">Concepts</a>
-          <a ws-href="/docs/api" class="btn btn-primary">API Ref</a>
+          <.dialup_action navigate="/" class="btn btn-primary">← Home</.dialup_action>
+          <.dialup_action navigate="/docs" class="btn btn-primary">Docs</.dialup_action>
+          <.dialup_action navigate="/docs/concepts" class="btn btn-primary">Concepts</.dialup_action>
+          <.dialup_action navigate="/docs/api" class="btn btn-primary">API Ref</.dialup_action>
         </div>
       </div>
     </div>

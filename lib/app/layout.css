@@ -235,6 +235,57 @@ pre code { background: none; color: inherit; padding: 0; font-size: inherit; bor
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* ── Docs pages (no sidebar — unified with site chrome) ── */
+.docs-page {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  min-width: 0;
+}
+.docs-page h1 { font-size: 2rem; margin: 0 0 0.5rem; font-family: serif; }
+.docs-page .page-lead {
+  font-size: 1.1rem; color: var(--muted); margin-top: 0;
+  border-bottom: 2px solid var(--main-text); padding-bottom: 1.5rem; margin-bottom: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.docs-page h2 {
+  font-size: 1.35rem; margin-top: 2.5rem; padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--main-text); font-family: serif;
+}
+.docs-page h3 { font-size: 1.05rem; margin-top: 1.75rem; color: var(--ink); font-family: serif; }
+.docs-page p { color: var(--ink); line-height: 1.7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.docs-page a.inline-link { text-decoration: underline; text-underline-offset: 3px; }
+.docs-page a.inline-link:hover { background: var(--accent); }
+.docs-page ul { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.8; }
+.api-block { margin-bottom: 2.5rem; }
+.api-block h3 {
+  margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.return-table, .attr-table {
+  width: 100%; border-collapse: collapse; font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.return-table th, .attr-table th {
+  background: var(--main-text); color: white; padding: 0.6rem 1rem;
+  text-align: left; font-weight: 700; border-bottom: 2px solid var(--black);
+}
+.attr-table th { background: var(--black); }
+.return-table td, .attr-table td {
+  padding: 0.6rem 1rem; border-bottom: 1px solid #ddd;
+  color: var(--ink); vertical-align: top;
+}
+.return-table tr:last-child td, .attr-table tr:last-child td { border-bottom: none; }
+
+@media (max-width: 768px) {
+  .docs-page { padding: 1.5rem 1rem; }
+  .docs-page h1 { font-size: 1.5rem; }
+  .return-table, .attr-table { font-size: 0.8rem; }
+  .return-table th, .attr-table th,
+  .return-table td, .attr-table td { padding: 0.5rem 0.75rem; }
+}
+
 /* ── Footer ── */
 .site-footer {
   border-top: var(--border); padding: 1rem 2rem;

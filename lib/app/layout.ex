@@ -5,13 +5,13 @@ defmodule Dialup.App.Layout do
     ~H"""
     <nav class="site-nav">
       <div class="nav-inner">
-        <span class="nav-logo" ws-href="/">Dialup</span>
+        <.dialup_action navigate="/" class="nav-logo">Dialup</.dialup_action>
         <div class="nav-links">
-          <span ws-href="/docs" class={if @current_path == "/docs", do: "active"}>Docs</span>
-          <span ws-href="/docs/concepts" class={if @current_path == "/docs/concepts", do: "active"}>Concepts</span>
-          <span ws-href="/docs/api" class={if @current_path == "/docs/api", do: "active"}>API</span>
-          <span ws-href="/agent_demo" class={if @current_path == "/agent_demo", do: "active"}>MCP Demo</span>
-          <span ws-href="/demo" class={if @current_path == "/demo", do: "active"}>Demo</span>
+          <.dialup_action navigate="/docs" class={if @current_path == "/docs", do: "active"}>Docs</.dialup_action>
+          <.dialup_action navigate="/docs/concepts" class={if @current_path == "/docs/concepts", do: "active"}>Concepts</.dialup_action>
+          <.dialup_action navigate="/docs/api" class={if @current_path == "/docs/api", do: "active"}>API</.dialup_action>
+          <.dialup_action navigate="/agent_demo" class={if @current_path == "/agent_demo", do: "active"}>MCP Demo</.dialup_action>
+          <.dialup_action navigate="/demo" class={if @current_path == "/demo", do: "active"}>Demo</.dialup_action>
           <a href="https://hexdocs.pm/dialup" class="nav-hexdocs" target="_blank" rel="noopener" title="HexDocs で詳細ドキュメントを読む">HexDocs &#8599;</a>
           <a href="https://github.com/SouichiroTsujimoto/Dialup" class="nav-github" target="_blank" aria-label="GitHub">
             <svg class="github-icon" height="20" viewBox="0 0 16 16" width="20" aria-hidden="true" fill="currentColor">
