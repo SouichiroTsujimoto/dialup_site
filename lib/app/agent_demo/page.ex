@@ -68,7 +68,7 @@ defmodule Dialup.App.AgentDemo.Page do
   def agent_grant(_assigns) do
     # このデモは「人間にできることは AI にもできる」を体現するため全権限を渡す。
     # タスク操作・UI ロックに加え、レイアウトが宣言したサイト内ナビゲーション
-    # （navigate_docs_concepts など）も自動的にツールとして利用できる。
+    # （navigate_docs__concepts など）も自動的にツールとして利用できる。
     %{
       capabilities: :all,
       projections: [:state, :regions, :actions],
