@@ -38,10 +38,10 @@ render the action button with dialup_action in HEEx|
   def render(assigns) do
     ~H"""
     <section class="hero">
-      <div class="hero-badge" ws-href="/docs">
+      <.dialup_action navigate="/docs" name={:navigate_docs_badge} class="hero-badge">
         <span class="badge-default">$ mix dialup.new my_app</span>
         <span class="badge-hover">→ Get Started!</span>
-      </div>
+      </.dialup_action>
       <h1>
         <span class="hl">WebSocket</span>-first<br/>
         Elixir Web Framework
@@ -52,9 +52,9 @@ render the action button with dialup_action in HEEx|
         <strong>UI を書くだけで MCP API が自動生成</strong>されるのが最大の特徴です。
       </p>
       <div class="hero-actions">
-        <span ws-href="/agent_demo" class="btn btn-primary">MCP Live Demo &rarr;</span>
-        <span ws-href="/docs" class="btn btn-ghost">Get Started</span>
-        <span ws-href="/demo" class="btn btn-ghost">UI Demo</span>
+        <.dialup_action navigate="/agent_demo" class="btn btn-primary">MCP Live Demo &rarr;</.dialup_action>
+        <.dialup_action navigate="/docs" class="btn btn-ghost">Get Started</.dialup_action>
+        <.dialup_action navigate="/demo" class="btn btn-ghost">UI Demo</.dialup_action>
       </div>
 
       <div class="hero-code">
@@ -95,9 +95,9 @@ render the action button with dialup_action in HEEx|
           </div>
         </div>
         <div class="section-content mcp-spotlight-cta">
-          <span ws-href="/agent_demo" class="btn btn-primary">
+          <.dialup_action navigate="/agent_demo" name={:navigate_agent_demo_spotlight} class="btn btn-primary">
             左右分割のライブデモを見る &rarr;
-          </span>
+          </.dialup_action>
         </div>
       </div>
     </section>
@@ -212,8 +212,8 @@ render the action button with dialup_action in HEEx|
           <p>MCP のライブデモと、カウンター・フォームの UI デモを用意しています。</p>
         </div>
         <div class="section-content hero-actions" style="justify-content: center;">
-          <span ws-href="/agent_demo" class="btn btn-primary">MCP Live Demo &rarr;</span>
-          <span ws-href="/demo" class="btn btn-ghost">UI Demo</span>
+          <.dialup_action navigate="/agent_demo" name={:navigate_agent_demo_footer} class="btn btn-primary">MCP Live Demo &rarr;</.dialup_action>
+          <.dialup_action navigate="/demo" name={:navigate_demo_footer} class="btn btn-ghost">UI Demo</.dialup_action>
         </div>
       </div>
     </section>

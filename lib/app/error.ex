@@ -1,6 +1,8 @@
 defmodule Dialup.App.Error do
   use Dialup.Error
 
+  import Dialup.Page, only: [dialup_action: 1]
+
   def render(404, assigns) do
     ~H"""
     <div class="error-page">
@@ -8,7 +10,7 @@ defmodule Dialup.App.Error do
       <h1 class="error-title">Page Not Found</h1>
       <p class="error-message">お探しのページは存在しないか、移動された可能性があります。</p>
       <div class="error-actions">
-        <span ws-href="/" class="btn btn-ghost-dark">トップページに戻る</span>
+        <.dialup_action navigate="/" class="btn btn-ghost-dark">トップページに戻る</.dialup_action>
       </div>
     </div>
     """
@@ -21,7 +23,7 @@ defmodule Dialup.App.Error do
       <h1 class="error-title">Internal Server Error</h1>
       <p class="error-message">サーバーで問題が発生しました。しばらくしてからもう一度お試しください。</p>
       <div class="error-actions">
-        <span ws-href="/" class="btn btn-ghost-dark">トップページに戻る</span>
+        <.dialup_action navigate="/" class="btn btn-ghost-dark">トップページに戻る</.dialup_action>
       </div>
     </div>
     """
@@ -34,7 +36,7 @@ defmodule Dialup.App.Error do
       <h1 class="error-title">Error</h1>
       <p class="error-message">予期しないエラーが発生しました。</p>
       <div class="error-actions">
-        <span ws-href="/" class="btn btn-ghost-dark">トップページに戻る</span>
+        <.dialup_action navigate="/" class="btn btn-ghost-dark">トップページに戻る</.dialup_action>
       </div>
     </div>
     """

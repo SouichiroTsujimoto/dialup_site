@@ -62,10 +62,8 @@ end|
 
   defp code_css_scope, do: ~S|<div class="d-layout">           <!-- app/layout.css のスコープ -->
   <header>...</header>
-  <div class="d-docs-layout">    <!-- docs/layout.css のスコープ -->
-    <div class="d-docs-page">    <!-- docs/page.css のスコープ -->
-      <h1>Docs</h1>
-    </div>
+  <div class="d-docs-page">    <!-- docs/page.css のスコープ -->
+    <h1>Docs</h1>
   </div>
 </div>|
 
@@ -96,6 +94,7 @@ end|
 
   def render(assigns) do
     ~H"""
+    <div class="docs-page">
     <h1>アーキテクチャ</h1>
     <p class="page-lead">
       Dialup の「1 タブ = 1 プロセス」モデルと、state の設計を解説します。
@@ -204,9 +203,10 @@ end|
     </p>
     <pre class="arch-diagram">{code_mcp_arch()}</pre>
     <p>
-      ライブデモは <span ws-href="/agent_demo" class="inline-link">/agent_demo</span>。
+      ライブデモは <.dialup_action navigate="/agent_demo" class="inline-link">/agent_demo</.dialup_action>。
       詳細は Hex ガイド <em>HTTP MCP API</em> を参照してください。
     </p>
+    </div>
     """
   end
 end

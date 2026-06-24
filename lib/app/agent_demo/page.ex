@@ -4,7 +4,7 @@ defmodule Dialup.App.AgentDemo.Page do
   declare_action name: :add_task,
                  desc: "Add one actionable task to the board",
                  params: %{title: :string, priority: {:string, default: "normal"}},
-                 # 人間側は自由入力フォーム（ws-submit）で発火するため dialup_action では描画しない
+                 # 自由入力フォームは ws-submit で送信（動的な title は dialup_action の静的 params では表現不可）
                  agent_only: true,
                  risk: "low",
                  effects: "Appends one task to the current board.",
@@ -22,6 +22,11 @@ defmodule Dialup.App.AgentDemo.Page do
                  params: %{},
                  risk: "medium",
                  effects: "Deletes completed tasks from the board."
+
+  declare_action name: :set_project,
+                 desc: "Rename the project goal shown on the board",
+                 params: %{value: :string},
+                 agent_only: true
 
   def page_title(_assigns), do: "AIにバトンタッチ — Dialup MCP Demo"
 
@@ -103,6 +108,11 @@ defmodule Dialup.App.AgentDemo.Page do
 
   def handle_event(:clear_completed, _params, assigns) do
     {:update, overwrite(assigns, %{tasks: Enum.reject(assigns.tasks, & &1.done)})}
+  end
+
+  def handle_event(:set_project, params, assigns) do
+    value = params["value"] || params[:value] || ""
+    {:update, overwrite(assigns, %{project: to_string(value)})}
   end
 
   def handle_event("set_project", value, assigns) when is_binary(value) do
