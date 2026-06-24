@@ -1,7 +1,7 @@
 defmodule Dialup.App.Page do
   use Dialup.Page
 
-  def page_title(_assigns), do: "Dialup — WebSocket-first Elixir Framework"
+  def page_title(_assigns), do: "Dialup — WebSocket-first Elixir Framework with HTTP MCP"
 
   defp counter_example, do: ~S|
 defmodule Dialup.App.Counter do
@@ -24,6 +24,17 @@ defmodule Dialup.App.Counter do
 end
 |
 
+  defp mcp_step1, do: ~S|declare_action name: :add_item, ...
+render the action button with dialup_action in HEEx|
+
+  defp mcp_step2, do: ~S|POST /agent/:token
+{"method":"tools/list"}
+→ add_item, read_scene, …|
+
+  defp mcp_step3, do: ~S|{"method":"tools/call",
+ "name":"add_item",
+ "arguments":{"_version":3}}|
+
   def render(assigns) do
     ~H"""
     <section class="hero">
@@ -36,13 +47,14 @@ end
         Elixir Web Framework
       </h1>
       <p class="hero-sub">
-        Dialup はサーバー上の GenServer がブラウザの状態を持ち続ける、
-        WebSocket ファーストな Elixir フレームワークです。 <br/>
-        新しい形のSingle Page Application を実現します。
+        Dialup はサーバー上の GenServer がブラウザの状態を持ち続ける WebSocket ファーストの
+        Elixir フレームワークです。<br/>
+        <strong>UI を書くだけで MCP API が自動生成</strong>されるのが最大の特徴です。
       </p>
       <div class="hero-actions">
-        <span ws-href="/docs" class="btn btn-primary">Get Started</span>
-        <span ws-href="/demo" class="btn btn-ghost">Live Demo &rarr;</span>
+        <span ws-href="/agent_demo" class="btn btn-primary">MCP Live Demo &rarr;</span>
+        <span ws-href="/docs" class="btn btn-ghost">Get Started</span>
+        <span ws-href="/demo" class="btn btn-ghost">UI Demo</span>
       </div>
 
       <div class="hero-code">
@@ -56,12 +68,51 @@ end
       </div>
     </section>
 
+    <section class="section mcp-spotlight">
+      <div class="container">
+        <div class="section-title">
+          <h2>UI から MCP API が生える</h2>
+          <p>
+            <code>&lt;.dialup_action&gt;</code> と <code>declare_action</code> を書くだけ。
+            別途 REST を設計する必要はありません。
+          </p>
+        </div>
+        <div class="mcp-spotlight-grid">
+          <div class="mcp-spotlight-card">
+            <span class="mcp-spotlight-step">1</span>
+            <h3>人間向け UI を書く</h3>
+            <pre class="mcp-spotlight-code"><code>{mcp_step1()}</code></pre>
+          </div>
+          <div class="mcp-spotlight-card mcp-spotlight-card-accent">
+            <span class="mcp-spotlight-step">2</span>
+            <h3>ツールが自動生成される</h3>
+            <pre class="mcp-spotlight-code"><code>{mcp_step2()}</code></pre>
+          </div>
+          <div class="mcp-spotlight-card">
+            <span class="mcp-spotlight-step">3</span>
+            <h3>同じ handle_event/3</h3>
+            <pre class="mcp-spotlight-code"><code>{mcp_step3()}</code></pre>
+          </div>
+        </div>
+        <div class="section-content mcp-spotlight-cta">
+          <span ws-href="/agent_demo" class="btn btn-primary">
+            左右分割のライブデモを見る &rarr;
+          </span>
+        </div>
+      </div>
+    </section>
+
     <section class="section section-alt">
       <div class="section-title">
         <h2>なぜ Dialup なのか</h2>
         <p>1 tab = 1 process で、全てのページにまたがってセッションが継続。<br/>状態はサーバー上に存在し、WebSocket で同期される。</p>
       </div>
       <div class="features container">
+        <div class="feature-card mcp-feature-card">
+          <span class="feature-icon">🤖</span>
+          <h3>UI → HTTP MCP</h3>
+          <p>action / region 宣言から <code>tools/list</code> と <code>tools/call</code> を自動生成。人間は WebSocket、AI は JSON-RPC。</p>
+        </div>
         <div class="feature-card">
           <span class="feature-icon">📁</span>
           <h3>ファイルベースルーティング</h3>
@@ -131,6 +182,12 @@ end
                 <td>サーバー</td>
               </tr>
               <tr>
+                <td>AI Agent API</td>
+                <td class="highlight-col">UI 宣言から HTTP MCP 自動生成</td>
+                <td>別途実装</td>
+                <td>別途実装</td>
+              </tr>
+              <tr>
                 <td>リアルタイム通信</td>
                 <td class="highlight-col">WebSocket 組み込み</td>
                 <td>別途実装が必要</td>
@@ -152,12 +209,11 @@ end
       <div class="container">
         <div class="section-title">
           <h2>実際に動かしてみる</h2>
-          <p>カウンター・フォーム・リアルタイム入力を体験できる Live Demo を用意しています。</p>
+          <p>MCP のライブデモと、カウンター・フォームの UI デモを用意しています。</p>
         </div>
-        <div class="section-content">
-          <a ws-href="/demo" class="btn btn-primary">
-            Live Demo を開く &rarr;
-          </a>
+        <div class="section-content hero-actions" style="justify-content: center;">
+          <span ws-href="/agent_demo" class="btn btn-primary">MCP Live Demo &rarr;</span>
+          <span ws-href="/demo" class="btn btn-ghost">UI Demo</span>
         </div>
       </div>
     </section>

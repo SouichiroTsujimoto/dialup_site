@@ -3,7 +3,7 @@ defmodule DialupSite do
 
   use Dialup,
     app_dir: __DIR__ <> "/app",
-    title: "Dialup — WebSocket-first Elixir Framework",
+    title: "Dialup — WebSocket-first Elixir Framework with HTTP MCP",
     lang: "en"
 
   @impl Application

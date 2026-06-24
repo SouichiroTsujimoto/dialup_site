@@ -10,6 +10,7 @@ defmodule Dialup.App.Layout do
           <span ws-href="/docs" class={if @current_path == "/docs", do: "active"}>Docs</span>
           <span ws-href="/docs/concepts" class={if @current_path == "/docs/concepts", do: "active"}>Concepts</span>
           <span ws-href="/docs/api" class={if @current_path == "/docs/api", do: "active"}>API</span>
+          <span ws-href="/agent_demo" class={if @current_path == "/agent_demo", do: "active"}>MCP Demo</span>
           <span ws-href="/demo" class={if @current_path == "/demo", do: "active"}>Demo</span>
           <a href="https://github.com/SouichiroTsujimoto/Dialup" class="nav-github" target="_blank" aria-label="GitHub">
             <svg class="github-icon" height="20" viewBox="0 0 16 16" width="20" aria-hidden="true" fill="currentColor">

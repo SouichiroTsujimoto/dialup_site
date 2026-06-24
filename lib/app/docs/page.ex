@@ -158,9 +158,10 @@ h1 { font-size: 3rem; }|
 
     <h2>次のステップ</h2>
     <ul>
+      <li><span ws-href="/agent_demo">MCP Live Demo</span> — UI から自動生成される HTTP JSON-RPC を体験</li>
       <li><span ws-href="/docs/concepts">アーキテクチャとライフサイクル</span>を理解する</li>
       <li><span ws-href="/docs/api">API リファレンス</span>で使える機能を確認する</li>
-      <li><span ws-href="/demo">Live Demo</span> で実際の動作を確認する</li>
+      <li><span ws-href="/demo">UI Demo</span> でリアルタイム UI を確認する</li>
     </ul>
     """
   end

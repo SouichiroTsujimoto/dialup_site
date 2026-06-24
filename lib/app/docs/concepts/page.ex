@@ -87,6 +87,13 @@ end|
   end
 end|
 
+  defp code_mcp_arch, do: ~S|【人間】 dialup.js ──WebSocket──► UserSessionProcess
+【AI】   POST /agent/:token (JSON-RPC) ──► 同じ UserSessionProcess
+                │
+         declare_action / dialup_action
+                │
+           tools/list · tools/call|
+
   def render(assigns) do
     ~H"""
     <h1>アーキテクチャ</h1>
@@ -186,6 +193,19 @@ end|
       Dialup はシンプルさを優先し、サーバーは HTML 断片をそのまま送信します。
       クライアント側の <a href="https://github.com/bigskysoftware/idiomorph">idiomorph</a>（5KB）が
       DOM を効率的にモーフィングするため、フォームの入力値が保たれます。
+    </p>
+
+    <h2>HTTP MCP API（UI から自動生成）</h2>
+    <p>
+      Dialup のもう一つの中心軸は、人間向け UI 宣言からエージェント向け HTTP JSON-RPC API を
+      自動生成することです。<code>&lt;.dialup_action&gt;</code> と <code>declare_action/1</code> が
+      <code>tools/list</code> のカタログになり、<code>tools/call</code> は同じ
+      <code>handle_event/3</code> に直列化されます。
+    </p>
+    <pre class="arch-diagram">{code_mcp_arch()}</pre>
+    <p>
+      ライブデモは <span ws-href="/agent_demo" class="inline-link">/agent_demo</span>。
+      詳細は Hex ガイド <em>HTTP MCP API</em> を参照してください。
     </p>
     """
   end
