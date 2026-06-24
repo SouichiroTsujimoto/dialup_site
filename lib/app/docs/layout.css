@@ -19,6 +19,8 @@
 }
 .sidebar-link:hover { background: var(--bg); border-left-color: var(--accent); }
 .sidebar-link.active { background: var(--main-background); font-weight: 700; border-left-color: var(--accent); }
+.sidebar-link-external { text-decoration: none; color: var(--accent); font-weight: 600; }
+.sidebar-link-external:hover { background: var(--accent); color: var(--main-background); }
 .docs-content { min-width: 0; }
 .docs-content h1 { font-size: 2rem; margin: 0 0 0.5rem; font-family: serif; }
 .docs-content .page-lead { font-size: 1.1rem; color: var(--muted); margin-top: 0; border-bottom: 2px solid var(--main-text); padding-bottom: 1.5rem; margin-bottom: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }

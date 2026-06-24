@@ -16,6 +16,9 @@ defmodule Dialup.App.Docs.Layout do
 
         <p class="sidebar-section-label">Demo</p>
         <span ws-href="/demo" class={"sidebar-link#{if @current_path == "/demo", do: " active"}"}>Live Demo</span>
+
+        <p class="sidebar-section-label">詳細ドキュメント</p>
+        <a href="https://hexdocs.pm/dialup" class="sidebar-link sidebar-link-external" target="_blank" rel="noopener">HexDocs &#8599;</a>
       </aside>
 
       <main class="docs-content">

@@ -163,6 +163,13 @@ h1 { font-size: 3rem; }|
       <li><span ws-href="/docs/api">API リファレンス</span>で使える機能を確認する</li>
       <li><span ws-href="/demo">UI Demo</span> でリアルタイム UI を確認する</li>
     </ul>
+
+    <div class="note">
+      <strong>さらに詳しく：</strong>
+      このサイトのドキュメントは導入ガイドです。全モジュール・全関数の網羅的なリファレンスや
+      各種ガイドは <a href="https://hexdocs.pm/dialup" target="_blank" rel="noopener">HexDocs（hexdocs.pm/dialup）</a>
+      で公開しています。
+    </div>
     """
   end
 end
