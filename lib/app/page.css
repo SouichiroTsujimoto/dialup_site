@@ -117,6 +117,68 @@
 .pill-purple { background: var(--main-background); color: var(--main-text); border-color: var(--main-text); }
 .pill-gray { background: var(--main-background); color: var(--main-text); border-color: var(--main-text); }
 
+.mcp-spotlight {
+  background: linear-gradient(180deg, #faf8f3 0%, var(--main-background) 100%);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.mcp-spotlight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.mcp-spotlight-card {
+  border: var(--border);
+  padding: 1.25rem;
+  background: var(--main-background);
+  text-align: left;
+}
+.mcp-spotlight-card-accent {
+  background: var(--accent);
+  color: var(--main-background);
+}
+.mcp-spotlight-card-accent .mcp-spotlight-code {
+  background: rgba(0, 0, 0, 0.15);
+  color: inherit;
+}
+.mcp-spotlight-step {
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+.mcp-spotlight-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+.mcp-spotlight-code {
+  margin: 0;
+  padding: 0.75rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  background: #0f172a;
+  color: #e2e8f0;
+  overflow-x: auto;
+  font-family: "Fira Code", Consolas, monospace;
+}
+.mcp-spotlight-cta { margin-top: 2rem; }
+.mcp-feature-card {
+  border-width: 2px;
+  box-shadow: 4px 4px 0 var(--accent);
+}
+
+@media (max-width: 900px) {
+  .mcp-spotlight-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 640px) {
   .hero { padding: 3rem 1.25rem 2.5rem; }
   .hero-sub { font-size: 1rem; }

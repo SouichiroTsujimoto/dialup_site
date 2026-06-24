@@ -62,10 +62,8 @@ end|
 
   defp code_css_scope, do: ~S|<div class="d-layout">           <!-- app/layout.css のスコープ -->
   <header>...</header>
-  <div class="d-docs-layout">    <!-- docs/layout.css のスコープ -->
-    <div class="d-docs-page">    <!-- docs/page.css のスコープ -->
-      <h1>Docs</h1>
-    </div>
+  <div class="d-docs-page">    <!-- docs/page.css のスコープ -->
+    <h1>Docs</h1>
   </div>
 </div>|
 
@@ -87,8 +85,16 @@ end|
   end
 end|
 
+  defp code_mcp_arch, do: ~S|【人間】 dialup.js ──WebSocket──► UserSessionProcess
+【AI】   POST /agent/:token (JSON-RPC) ──► 同じ UserSessionProcess
+                │
+         declare_action / dialup_action
+                │
+           tools/list · tools/call|
+
   def render(assigns) do
     ~H"""
+    <div class="docs-page">
     <h1>アーキテクチャ</h1>
     <p class="page-lead">
       Dialup の「1 タブ = 1 プロセス」モデルと、state の設計を解説します。
@@ -187,6 +193,20 @@ end|
       クライアント側の <a href="https://github.com/bigskysoftware/idiomorph">idiomorph</a>（5KB）が
       DOM を効率的にモーフィングするため、フォームの入力値が保たれます。
     </p>
+
+    <h2>HTTP MCP API（UI から自動生成）</h2>
+    <p>
+      Dialup のもう一つの中心軸は、人間向け UI 宣言からエージェント向け HTTP JSON-RPC API を
+      自動生成することです。<code>&lt;.dialup_action&gt;</code> と <code>declare_action/1</code> が
+      <code>tools/list</code> のカタログになり、<code>tools/call</code> は同じ
+      <code>handle_event/3</code> に直列化されます。
+    </p>
+    <pre class="arch-diagram">{code_mcp_arch()}</pre>
+    <p>
+      ライブデモは <.dialup_action navigate="/agent_demo" class="inline-link">/agent_demo</.dialup_action>。
+      詳細は Hex ガイド <em>HTTP MCP API</em> を参照してください。
+    </p>
+    </div>
     """
   end
 end

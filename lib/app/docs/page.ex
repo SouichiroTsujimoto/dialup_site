@@ -103,6 +103,7 @@ h1 { font-size: 3rem; }|
 
   def render(assigns) do
     ~H"""
+    <div class="docs-page">
     <h1>Getting Started</h1>
     <p class="page-lead">
       Dialup を使って最初のリアルタイムページを動かすまでのガイドです。
@@ -158,10 +159,12 @@ h1 { font-size: 3rem; }|
 
     <h2>次のステップ</h2>
     <ul>
-      <li><span ws-href="/docs/concepts">アーキテクチャとライフサイクル</span>を理解する</li>
-      <li><span ws-href="/docs/api">API リファレンス</span>で使える機能を確認する</li>
-      <li><span ws-href="/demo">Live Demo</span> で実際の動作を確認する</li>
+      <li><.dialup_action navigate="/agent_demo" class="inline-link">MCP Live Demo</.dialup_action> — UI から自動生成される HTTP JSON-RPC を体験</li>
+      <li><.dialup_action navigate="/docs/concepts" class="inline-link">アーキテクチャとライフサイクル</.dialup_action>を理解する</li>
+      <li><.dialup_action navigate="/docs/api" class="inline-link">API リファレンス</.dialup_action>で使える機能を確認する</li>
+      <li><.dialup_action navigate="/demo" class="inline-link">UI Demo</.dialup_action> でリアルタイム UI を確認する</li>
     </ul>
+    </div>
     """
   end
 end
